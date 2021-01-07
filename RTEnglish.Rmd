@@ -29,17 +29,15 @@ col_types = cols(
   URL = col_character()
 )
 
-data <- read_csv("soros russia.csv", col_types = col_types)
+data <- read_csv("soros-russia.csv", col_types = col_types)
 
-view(data)
-# sample <- slice(data, n = 10)
-# view(sample)
+# view(data)
 ```
 
 ```{r}
-data$content <- replace_non_ascii(data$content, replacement = "")
-Encoding(data) <- "latin1"
-view(data)
+Encoding(data$content) <- "latin1"
+
+data$content <- replace_non_ascii(data$content)
 ```
 
 ```{r}
@@ -56,12 +54,21 @@ corpus <- tm_map(corpus, removeNumbers)
 
 corpus <- tm_map(corpus, removePunctuation)
 
-# corpus <- tm_map(corpus, removeWords, stopwords("english"))
+corpus <- tm_map(corpus, removeWords, stopwords("english"))
 ```
 
 ```{r}
-corpus[[1]]$content
+test1 <- corpus[[189]]$content
 ```
+
+```{r}
+corpus <- tm_map(corpus, stemDocument)
+```
+
+```{r}
+test2 <- corpus[[189]]$content
+```
+
 
 
 
