@@ -1,0 +1,73 @@
+---
+title: "RTEnglish"
+author: "Sophia Freuden"
+date: "1/7/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r}
+library(tm)
+library(SentimentAnalysis)
+library(syuzhet)
+library(SnowballC)
+library(wordcloud)
+library(RColorBrewer)
+library(RCurl)
+library(textclean)
+library(tidyverse)
+```
+
+```{r}
+col_types = cols(
+  date = col_character(),
+  title = col_character(),
+  content = col_character(),
+  URL = col_character()
+)
+
+data <- read_csv("soros russia.csv", col_types = col_types)
+```
+
+```{r}
+# view(data)
+```
+
+```{r}
+corpus <- SimpleCorpus(VectorSource(data$content))
+# view(corpus)
+```
+
+```{r}
+corpus <- tm_map(corpus, stripWhitespace)
+
+corpus <- tm_map(corpus, content_transformer(tolower))
+
+corpus <- tm_map(corpus, removeNumbers)
+
+corpus <- tm_map(corpus, removePunctuation)
+
+# corpus <- tm_map(corpus, removeWords, stopwords("english"))
+```
+
+```{r}
+corpus[[1]]$content
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
