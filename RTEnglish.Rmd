@@ -30,10 +30,16 @@ col_types = cols(
 )
 
 data <- read_csv("soros russia.csv", col_types = col_types)
+
+view(data)
+# sample <- slice(data, n = 10)
+# view(sample)
 ```
 
 ```{r}
-# view(data)
+data$content <- replace_non_ascii(data$content, replacement = "")
+Encoding(data) <- "latin1"
+view(data)
 ```
 
 ```{r}
