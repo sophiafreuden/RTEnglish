@@ -18,6 +18,7 @@ library(wordcloud)
 library(RColorBrewer)
 library(RCurl)
 library(textclean)
+library(lubridate)
 library(tidyverse)
 ```
 
@@ -30,6 +31,9 @@ col_types = cols(
 )
 
 data <- read_csv("soros-russia.csv", col_types = col_types)
+
+data <- data %>%
+  mutate(date = dmy(date))
 
 # view(data)
 ```
@@ -73,8 +77,8 @@ corpus <- tm_map(corpus, stemDocument)
 
 ```{r}
 DTM <- DocumentTermMatrix(corpus)
-view(DTM)
-inspect(DTM)
+# view(DTM)
+# inspect(DTM)
 ```
 
 ```{r}
@@ -112,6 +116,23 @@ head2 <- sums2[1:75,]
 wordcloud(words = head2$term, freq = head2$count, min.freq = 1000,
   max.words=100, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
+```
+
+```{r}
+sent <- analyzeSentiment(DTM, language = "english")
+# view(sent)
+
+sent <- sent[,1:4]
+
+sent <- as.data.frame(sent)
+
+# view(sent)
+
+summary(sent$SentimentGI)
+
+final <- bind_cols(data, sent)
+
+head(final)
 ```
 
 
