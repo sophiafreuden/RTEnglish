@@ -19,6 +19,7 @@ library(RColorBrewer)
 library(RCurl)
 library(textclean)
 library(lubridate)
+library(gt)
 library(tidyverse)
 ```
 
@@ -94,9 +95,15 @@ head <- sums[1:75,]
 ```
 
 ```{r}
-wordcloud(words = head$term, freq = head$count, min.freq = 1000,
+wc1 <- wordcloud(words = head$term, freq = head$count, min.freq = 1000,
   max.words=100, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
+```
+
+```{r}
+webshot::install_phantomjs()
+saveWidget(wc1,"1.html",selfcontained = F)
+webshot::webshot("1.html","1.png",vwidth = 1992, vheight = 1744, delay =10)
 ```
 
 ```{r}
@@ -128,14 +135,58 @@ sent <- as.data.frame(sent)
 
 # view(sent)
 
-summary(sent$SentimentGI)
+sum1 <- tibble(summary(sent$SentimentGI))
 
 final <- bind_cols(data, sent)
 
-head(final)
+# head(final)
 ```
 
+```{r}
+sum2 <- as.data.frame(t(sum1))
 
+table1 <- sum2 %>%
+  gt() %>%
+  tab_header(
+    title = "Sentiment Polarization Summary",
+    subtitle = "Search Term: 'soros russia'"
+    )  %>% 
+  cols_label(
+    V1 = "Min.",
+    V2 = "1st Qu.",
+    V3 = "Median",
+    V4 = "Mean",
+    V5 = "3rd Qu.",
+    V6 = "Max."
+    ) %>% 
+  gtsave("table1.png", zoom = 2.5, expand = 10)
+```
+
+```{r}
+sent2 <- get_nrc_sentiment(data$content, language = "english")
+
+sent3 <- as.data.frame(colSums(sent2))
+
+sent3 <- rownames_to_column(sent3)
+
+colnames(sent3) <- c("emotion", "count")
+```
+
+```{r}
+emo1 <- ggplot(sent3, aes(x = emotion, y = count, fill = emotion)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  theme(legend.position="none", panel.grid.major = element_blank()) +
+  labs( x = "Emotion", y = "Total Count") +
+  ggtitle("Emotion Analysis of 'soros russia'") +
+  theme(plot.title = element_text(hjust=0.5))
+```
+
+```{r}
+pdf("emo1.pdf", width = 11)
+emo1
+dev.off()
+```
 
 
 
