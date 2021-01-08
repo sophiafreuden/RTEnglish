@@ -58,19 +58,61 @@ corpus <- tm_map(corpus, removeWords, stopwords("english"))
 ```
 
 ```{r}
-test1 <- corpus[[189]]$content
+# test1 <- corpus[[189]]$content
 ```
 
 ```{r}
+nonstem.corpus <- corpus
 corpus <- tm_map(corpus, stemDocument)
 ```
 
 ```{r}
-test2 <- corpus[[189]]$content
+# test2 <- corpus[[189]]$content
+# test3 <- nonstem.corpus[[189]]$content
 ```
 
+```{r}
+DTM <- DocumentTermMatrix(corpus)
+view(DTM)
+inspect(DTM)
+```
 
+```{r}
+nDTM <- DocumentTermMatrix(nonstem.corpus)
+```
 
+```{r}
+sums <- as.data.frame(colSums(as.matrix(nDTM)))
+sums <- rownames_to_column(sums) 
+colnames(sums) <- c("term", "count")
+sums <- arrange(sums, desc(count))
+head <- sums[1:75,]
+```
+
+```{r}
+wordcloud(words = head$term, freq = head$count, min.freq = 1000,
+  max.words=100, random.order=FALSE, rot.per=0.35, 
+  colors=brewer.pal(8, "Dark2"))
+```
+
+```{r}
+# The word cloud above uses the non-stemmed documents. The one below used the stemmed
+# documents. For word clouds specifically, it may be better to use non-stemmed documents.
+```
+
+```{r}
+sums2 <- as.data.frame(colSums(as.matrix(DTM)))
+sums2 <- rownames_to_column(sums2) 
+colnames(sums2) <- c("term", "count")
+sums2 <- arrange(sums2, desc(count))
+head2 <- sums2[1:75,]
+```
+
+```{r}
+wordcloud(words = head2$term, freq = head2$count, min.freq = 1000,
+  max.words=100, random.order=FALSE, rot.per=0.35, 
+  colors=brewer.pal(8, "Dark2"))
+```
 
 
 
