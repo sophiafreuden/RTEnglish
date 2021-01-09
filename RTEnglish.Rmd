@@ -20,8 +20,6 @@ library(RCurl)
 library(textclean)
 library(lubridate)
 library(gt)
-library(webshot)
-library(htmlwidgets)
 library(tidyverse)
 ```
 
@@ -33,6 +31,7 @@ col_types = cols(
   URL = col_character()
 )
 
+# Be sure to use correct data file for your chosen search term.
 data <- read_csv("soros-russia.csv", col_types = col_types)
 
 data <- data %>%
@@ -65,17 +64,8 @@ corpus <- tm_map(corpus, removeWords, stopwords("english"))
 ```
 
 ```{r}
-# test1 <- corpus[[189]]$content
-```
-
-```{r}
 nonstem.corpus <- corpus
 corpus <- tm_map(corpus, stemDocument)
-```
-
-```{r}
-# test2 <- corpus[[189]]$content
-# test3 <- nonstem.corpus[[189]]$content
 ```
 
 ```{r}
@@ -97,6 +87,7 @@ sums <- arrange(sums, desc(count))
 head <- sums[1:75,]
 
 sums2 <- as.data.frame(as.matrix(nDTM))
+# Might want to change the above to DTM.
 ```
 
 ```{r}
@@ -104,7 +95,25 @@ sums2$ArtDate <- data$date
 ```
 
 ```{r}
-wc1 <- wordcloud(words = head$term, freq = head$count, min.freq = 1000,
+# CHANGE BELOW:
+# y in aes and
+# 'Term' and 'RT Seach Term' to whatever term/search term your data is based on.
+
+sums2 %>% 
+  ggplot(aes(x = ArtDate, y = soros)) +
+  geom_point() +
+  geom_smooth(method = 'loess') +
+  labs(
+    title = "Term Frequency Per Article Over Time",
+    subtitle = "Term: 'soros', RT Search Term: 'soros russia'",
+    x = "Date",
+    y = "Frequency"
+  ) +
+  ggsave("plot1.png")
+```
+
+```{r}
+wordcloud(words = head$term, freq = head$count, min.freq = 1000,
   max.words=100, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
 
@@ -150,11 +159,12 @@ final <- bind_cols(data, sent)
 ```{r}
 sum2 <- as.data.frame(t(sum1))
 
-table1 <- sum2 %>%
+# CHANGE BELOW 'RT Seach Term' to whatever search term your data is based on.
+sum2 %>%
   gt() %>%
   tab_header(
     title = "Sentiment Polarization Summary",
-    subtitle = "Search Term: 'soros russia'"
+    subtitle = "RT Search Term: 'soros russia'"
     )  %>% 
   cols_label(
     V1 = "Min.",
@@ -178,19 +188,14 @@ colnames(sent3) <- c("emotion", "count")
 ```
 
 ```{r}
-emo1 <- ggplot(sent3, aes(x = emotion, y = count, fill = emotion)) +
+ggplot(sent3, aes(x = emotion, y = count, fill = emotion)) +
   geom_bar(stat = "identity") +
   theme_minimal() +
   theme(legend.position="none", panel.grid.major = element_blank()) +
   labs( x = "Emotion", y = "Total Count") +
   ggtitle("Emotion Analysis of 'soros russia'") +
-  theme(plot.title = element_text(hjust=0.5))
-```
-
-```{r}
-pdf("emo1.pdf", width = 11)
-emo1
-dev.off()
+  theme(plot.title = element_text(hjust=0.5)) +
+  ggsave("emo1.png")
 ```
 
 
