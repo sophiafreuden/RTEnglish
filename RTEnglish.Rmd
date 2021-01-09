@@ -20,6 +20,8 @@ library(RCurl)
 library(textclean)
 library(lubridate)
 library(gt)
+library(webshot)
+library(htmlwidgets)
 library(tidyverse)
 ```
 
@@ -84,6 +86,7 @@ DTM <- DocumentTermMatrix(corpus)
 
 ```{r}
 nDTM <- DocumentTermMatrix(nonstem.corpus)
+# view(nDTM)
 ```
 
 ```{r}
@@ -92,18 +95,20 @@ sums <- rownames_to_column(sums)
 colnames(sums) <- c("term", "count")
 sums <- arrange(sums, desc(count))
 head <- sums[1:75,]
+
+sums2 <- as.data.frame(as.matrix(nDTM))
+```
+
+```{r}
+sums2$ArtDate <- data$date
 ```
 
 ```{r}
 wc1 <- wordcloud(words = head$term, freq = head$count, min.freq = 1000,
   max.words=100, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
-```
 
-```{r}
-webshot::install_phantomjs()
-saveWidget(wc1,"1.html",selfcontained = F)
-webshot::webshot("1.html","1.png",vwidth = 1992, vheight = 1744, delay =10)
+# This must be saved manually (right click the image when it appears.)
 ```
 
 ```{r}
