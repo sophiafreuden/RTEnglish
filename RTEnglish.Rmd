@@ -192,10 +192,12 @@ ggplot(sent3, aes(x = emotion, y = count, fill = emotion)) +
   geom_bar(stat = "identity") +
   theme_minimal() +
   theme(legend.position="none", panel.grid.major = element_blank()) +
-  labs( x = "Emotion", y = "Total Count") +
-  ggtitle("Emotion Analysis of 'soros russia'") +
-  theme(plot.title = element_text(hjust=0.5)) +
-  ggsave("emo1.png")
+  labs(title = "Emotion Analysis",
+       x = "Emotion",
+       y = "Total Count",
+       subtitle = "RT Search Term: 'soros Russia'") +
+  scale_fill_brewer(palette="Paired") +
+  ggsave("emo1.png", width = 10)
 ```
 
 
