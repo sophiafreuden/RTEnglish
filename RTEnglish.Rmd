@@ -34,12 +34,16 @@ col_types = cols(
 # col_types = col_types
 
 # Be sure to use correct data file for your chosen search term.
-data <- read_csv("stop-soros.csv", col_types = col_types)
+data <- read_csv("mcfaul.csv", col_types = col_types)
 
 data <- data %>%
   mutate(date = dmy(date))
 
-# view(data$content)
+# view(data)
+
+# Some of the cells in the content column may appear empty in view(). Print one row in
+# console to check. I suspect they are just too big to appear in view(), but are other-
+# wise present.
 ```
 
 ```{r}
@@ -107,17 +111,17 @@ sums2d$ArtDate <- data$date
 sums2 %>%
   # The group_by and summarise below sum the articles by date. Alt version c'd out below.
   group_by(ArtDate) %>% 
-  summarise(Frequency = sum(mcfaul)) %>%
+  summarise(Frequency = sum(civilsociety)) %>%
   ggplot(aes(x = ArtDate, y = Frequency)) +
   geom_point() +
   geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'mcfaul', RT Search Term: 'stop soros'",
+    subtitle = "Term: 'civilsociety', RT Search Term: 'mcfaul'",
     x = "Date",
     y = "Frequency",
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
-    caption = "RT Search Term was entered with quotation marks for accuracy." # Stemmed."
+    caption = "Stemmed."
   ) +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -144,7 +148,7 @@ sums2 %>%
 ```
 
 ```{r}
-wordcloud(words = head$term, freq = head$count, min.freq = 1000,
+wordcloud(words = head$term, freq = head$count, min.freq = 50,
   max.words=100, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
 
@@ -165,7 +169,7 @@ head3 <- sums3[1:75,]
 ```
 
 ```{r}
-wordcloud(words = head3$term, freq = head3$count, min.freq = 1000,
+wordcloud(words = head3$term, freq = head3$count, min.freq = 50,
   max.words=100, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
 ```
@@ -195,11 +199,11 @@ sum2 %>%
   gt() %>%
   tab_header(
     title = "Sentiment Polarization Summary",
-    subtitle = "RT Search Term: 'stop soros'"
+    subtitle = "RT Search Term: 'mcfaul'"
     )  %>% 
-  tab_source_note(
-    source_note = "RT Search Term was entered with quotation marks for accuracy."
-    ) %>% 
+  # #tab_source_note(
+  #   source_note = "RT Search Term was entered with quotation marks for accuracy."
+  #   ) %>% 
   cols_label(
     V1 = "Min.",
     V2 = "1st Qu.",
@@ -229,8 +233,9 @@ ggplot(sent3, aes(x = emotion, y = count, fill = emotion)) +
   labs(title = "Emotion Analysis",
        x = "Emotion",
        y = "Total Count",
-       subtitle = "RT Search Term: 'stop soros'",
-       caption = "RT Search Term was entered with quotation marks for accuracy.") +
+       subtitle = "RT Search Term: 'mcfaul'"
+       # caption = "RT Search Term was entered with quotation marks for accuracy."
+       ) +
   scale_fill_brewer(palette="Paired") +
   ggsave("emo1.png", width = 10)
 ```
