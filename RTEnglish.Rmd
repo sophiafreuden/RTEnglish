@@ -24,17 +24,17 @@ library(tidyverse)
 ```
 
 ```{r}
-# col_types = cols(
-#   date = col_character(),
-#   title = col_character(),
-#   content = col_character(),
-#   URL = col_character()
-# )
+col_types = cols(
+  date = col_character(),
+  title = col_character(),
+  content = col_character(),
+  URL = col_character()
+)
 
 # col_types = col_types
 
 # Be sure to use correct data file for your chosen search term.
-data <- read_csv("stop-soros.csv")
+data <- read_csv("stop-soros.csv", col_types = col_types)
 
 data <- data %>%
   mutate(date = dmy(date))
@@ -107,17 +107,17 @@ sums2d$ArtDate <- data$date
 sums2 %>%
   # The group_by and summarise below sum the articles by date. Alt version c'd out below.
   group_by(ArtDate) %>% 
-  summarise(Frequency = sum(stopsoros)) %>%
+  summarise(Frequency = sum(central)) %>%
   ggplot(aes(x = ArtDate, y = Frequency)) +
   geom_point() +
   geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'stopsoros', RT Search Term: 'stop soros'",
+    subtitle = "Term: 'central', RT Search Term: 'stop soros'",
     x = "Date",
     y = "Frequency",
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
-    caption = "RT Search Term was entered with quotation marks for accuracy." # Stemmed
+    caption = "RT Search Term was entered with quotation marks for accuracy." # Stemmed."
   ) +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -165,7 +165,7 @@ head3 <- sums3[1:75,]
 ```
 
 ```{r}
-wordcloud(words = head3$term, freq = head2$count, min.freq = 1000,
+wordcloud(words = head3$term, freq = head3$count, min.freq = 1000,
   max.words=100, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
 ```
