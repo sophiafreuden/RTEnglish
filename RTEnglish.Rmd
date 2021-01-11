@@ -104,20 +104,20 @@ sums2d$ArtDate <- data$date
 # term in sum() below and
 # 'Term' and 'RT Seach Term' to whatever term/search term your data is based on.
 
-sums2d %>%
+sums2 %>%
   # The group_by and summarise below sum the articles by date. Alt version c'd out below.
   group_by(ArtDate) %>% 
-  summarise(Frequency = sum(campaign)) %>%
+  summarise(Frequency = sum(mcfaul)) %>%
   ggplot(aes(x = ArtDate, y = Frequency)) +
   geom_point() +
   geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'campaign', RT Search Term: 'stop soros'",
+    subtitle = "Term: 'mcfaul', RT Search Term: 'stop soros'",
     x = "Date",
     y = "Frequency",
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
-    caption = "RT Search Term was entered with quotation marks for accuracy. Stemmed."
+    caption = "RT Search Term was entered with quotation marks for accuracy." # Stemmed."
   ) +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -197,6 +197,9 @@ sum2 %>%
     title = "Sentiment Polarization Summary",
     subtitle = "RT Search Term: 'stop soros'"
     )  %>% 
+  tab_source_note(
+    source_note = "RT Search Term was entered with quotation marks for accuracy."
+    ) %>% 
   cols_label(
     V1 = "Min.",
     V2 = "1st Qu.",
