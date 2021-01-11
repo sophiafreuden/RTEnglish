@@ -95,12 +95,17 @@ sums2$ArtDate <- data$date
 ```
 
 ```{r}
+# Summed per date.
+
 # CHANGE BELOW:
 # y in aes and
 # 'Term' and 'RT Seach Term' to whatever term/search term your data is based on.
 
-sums2 %>% 
-  ggplot(aes(x = ArtDate, y = soros)) +
+sums2 %>%
+  # The group_by and summarise below sum the articles by date. Alt version c'd out below.
+  group_by(ArtDate) %>% 
+  summarise(Frequency = sum(soros)) %>%
+  ggplot(aes(x = ArtDate, y = Frequency)) +
   geom_point() +
   geom_smooth(method = 'loess') +
   labs(
@@ -109,7 +114,27 @@ sums2 %>%
     x = "Date",
     y = "Frequency"
   ) +
-  ggsave("plot1.png")
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggsave("plot1.png", width = 10)
+```
+
+```{r}
+# Non-summed per date.
+
+# sums2 %>%
+#   ggplot(aes(x = ArtDate, y = soros)) +
+#   geom_point() +
+#   geom_smooth(method = 'loess') +
+#   labs(
+#     title = "Term Frequency Per Article Time",
+#     subtitle = "Term: 'soros', RT Search Term: 'soros russia'",
+#     x = "Date",
+#     y = "Frequency"
+#   ) +
+#   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+#   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+#   ggsave("plot2.png", width = 10)
 ```
 
 ```{r}
@@ -126,15 +151,15 @@ wordcloud(words = head$term, freq = head$count, min.freq = 1000,
 ```
 
 ```{r}
-sums2 <- as.data.frame(colSums(as.matrix(DTM)))
-sums2 <- rownames_to_column(sums2) 
-colnames(sums2) <- c("term", "count")
-sums2 <- arrange(sums2, desc(count))
-head2 <- sums2[1:75,]
+sums3 <- as.data.frame(colSums(as.matrix(DTM)))
+sums3 <- rownames_to_column(sums3) 
+colnames(sums3) <- c("term", "count")
+sums3 <- arrange(sums3, desc(count))
+head3 <- sums3[1:75,]
 ```
 
 ```{r}
-wordcloud(words = head2$term, freq = head2$count, min.freq = 1000,
+wordcloud(words = head3$term, freq = head2$count, min.freq = 1000,
   max.words=100, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
 ```
