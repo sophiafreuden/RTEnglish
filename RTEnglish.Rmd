@@ -87,32 +87,35 @@ sums <- arrange(sums, desc(count))
 head <- sums[1:75,]
 
 sums2 <- as.data.frame(as.matrix(nDTM))
-# Might want to change the above to DTM.
+sums2d <- as.data.frame(as.matrix(DTM))
 ```
 
 ```{r}
 sums2$ArtDate <- data$date
+sums2d$ArtDate <- data$date
 ```
 
 ```{r}
-# Summed per date.
+# Summed per date. Change between sums2 and sums2d (stemmed) as needed.
 
 # CHANGE BELOW:
-# y in aes and
+# term in sum() below and
 # 'Term' and 'RT Seach Term' to whatever term/search term your data is based on.
 
-sums2 %>%
+sums2d %>%
   # The group_by and summarise below sum the articles by date. Alt version c'd out below.
   group_by(ArtDate) %>% 
-  summarise(Frequency = sum(soros)) %>%
+  summarise(Frequency = sum(elect)) %>%
   ggplot(aes(x = ArtDate, y = Frequency)) +
   geom_point() +
   geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'soros', RT Search Term: 'soros russia'",
+    subtitle = "Term: 'elect', RT Search Term: 'soros russia'",
     x = "Date",
-    y = "Frequency"
+    y = "Frequency",
+    # Comment/uncomment caption below as needed.
+    caption = "Stemmed."
   ) +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -121,6 +124,7 @@ sums2 %>%
 
 ```{r}
 # Non-summed per date.
+# Folloew "Change Below" instructions above, but sum() term is y below.
 
 # sums2 %>%
 #   ggplot(aes(x = ArtDate, y = soros)) +
