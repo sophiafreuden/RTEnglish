@@ -34,7 +34,7 @@ col_types = cols(
 # col_types = col_types
 
 # Be sure to use correct data file for your chosen search term.
-data <- read_csv("mcfaul.csv", col_types = col_types)
+data <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
 
 data <- data %>%
   mutate(date = dmy(date))
@@ -108,16 +108,16 @@ sums2d$ArtDate <- data$date
 # term in sum() below and
 # 'Term' and 'RT Seach Term' to whatever term/search term your data is based on.
 
-sums2 %>%
+sums2d %>%
   # The group_by and summarise below sum the articles by date. Alt version c'd out below.
   group_by(ArtDate) %>% 
-  summarise(Frequency = sum(civilsociety)) %>%
+  summarise(Frequency = sum(ukrain)) %>%
   ggplot(aes(x = ArtDate, y = Frequency)) +
   geom_point() +
   geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'civilsociety', RT Search Term: 'mcfaul'",
+    subtitle = "Term: 'ukrain', RT Search Term: 'mcfaul'",
     x = "Date",
     y = "Frequency",
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
@@ -148,7 +148,7 @@ sums2 %>%
 ```
 
 ```{r}
-wordcloud(words = head$term, freq = head$count, min.freq = 50,
+wordcloud(words = head$term, freq = head$count, min.freq = 150,
   max.words=100, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
 
@@ -169,7 +169,7 @@ head3 <- sums3[1:75,]
 ```
 
 ```{r}
-wordcloud(words = head3$term, freq = head3$count, min.freq = 50,
+wordcloud(words = head3$term, freq = head3$count, min.freq = 150,
   max.words=100, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
 ```
@@ -199,7 +199,7 @@ sum2 %>%
   gt() %>%
   tab_header(
     title = "Sentiment Polarization Summary",
-    subtitle = "RT Search Term: 'mcfaul'"
+    subtitle = "RT Search Term: 'clinton civil society'"
     )  %>% 
   # #tab_source_note(
   #   source_note = "RT Search Term was entered with quotation marks for accuracy."
@@ -233,7 +233,7 @@ ggplot(sent3, aes(x = emotion, y = count, fill = emotion)) +
   labs(title = "Emotion Analysis",
        x = "Emotion",
        y = "Total Count",
-       subtitle = "RT Search Term: 'mcfaul'"
+       subtitle = "RT Search Term: 'clinton civil society'"
        # caption = "RT Search Term was entered with quotation marks for accuracy."
        ) +
   scale_fill_brewer(palette="Paired") +
