@@ -34,7 +34,7 @@ col_types = cols(
 # col_types = col_types
 
 # Be sure to use correct data file for your chosen search term.
-data <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
+data <- read_csv("mcfaul-civil-society.csv", col_types = col_types)
 
 data <- data %>%
   mutate(date = dmy(date))
@@ -117,7 +117,7 @@ sums2d %>%
   geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'ukrain', RT Search Term: 'mcfaul'",
+    subtitle = "Term: 'ukrain', RT Search Term: 'mcfaul civil society'",
     x = "Date",
     y = "Frequency",
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
@@ -148,7 +148,7 @@ sums2d %>%
 ```
 
 ```{r}
-wordcloud(words = head$term, freq = head$count, min.freq = 150,
+wordcloud(words = head$term, freq = head$count, min.freq = 10,
   max.words=100, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
 
@@ -199,7 +199,7 @@ sum2 %>%
   gt() %>%
   tab_header(
     title = "Sentiment Polarization Summary",
-    subtitle = "RT Search Term: 'clinton civil society'"
+    subtitle = "RT Search Term: 'mcfaul civil society'"
     )  %>% 
   # #tab_source_note(
   #   source_note = "RT Search Term was entered with quotation marks for accuracy."
@@ -233,7 +233,7 @@ ggplot(sent3, aes(x = emotion, y = count, fill = emotion)) +
   labs(title = "Emotion Analysis",
        x = "Emotion",
        y = "Total Count",
-       subtitle = "RT Search Term: 'clinton civil society'"
+       subtitle = "RT Search Term: 'mcfaul civil society'"
        # caption = "RT Search Term was entered with quotation marks for accuracy."
        ) +
   scale_fill_brewer(palette="Paired") +
