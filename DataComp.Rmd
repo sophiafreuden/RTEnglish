@@ -124,7 +124,34 @@ u <- unique(all_data$URL)
 # u is a character vector length 880; raw all_data length 1344.
 ```
 
+```{r}
+data45 <- bind_rows(data4, data5)
+```
 
+```{r}
+data456 <- bind_rows(data45, data6)
+```
+
+```{r}
+data4567 <- bind_rows(data456, data7)
+```
+
+```{r}
+data45678 <- bind_rows(data4567, data8)
+```
+
+```{r}
+all_soros <- bind_rows(data45678, data9)
+```
+
+```{r}
+u_soros <- unique(all_soros$URL)
+# u_soros is a character vector length 429; raw all_soros length 866.
+```
+
+```{r}
+# u_soros: 429; clinton: 116; mcfaul: 200; orange revolution: 162. The sums of these != u as there is some overlap between them (but not within them).
+```
 
 
 
