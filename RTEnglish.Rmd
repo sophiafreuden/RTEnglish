@@ -32,7 +32,7 @@ col_types = cols(
 )
 
 # Be sure to use correct data file for your chosen search term.
-data <- read_csv("soros-open-society/soros-open-society.csv", col_types = col_types)
+data <- read_csv("clinton-maidan.csv", col_types = col_types)
 
 data <- data %>%
   mutate(date = dmy(date))
@@ -106,24 +106,24 @@ sums2d$ArtDate <- data$date
 # term in sum() below and
 # 'Term' and 'RT Seach Term' to whatever term/search term your data is based on.
 
-sums2d %>%
+sums2 %>%
   # The group_by and summarise below sum the articles by date. Alt version c'd out below.
   group_by(ArtDate) %>% 
-  summarise(Frequency = sum(elect)) %>%
+  summarise(Frequency = sum(putin)) %>%
   ggplot(aes(x = ArtDate, y = Frequency)) +
   geom_point() +
   geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'elect', RT Search Term: 'soros open society'",
+    subtitle = "Term: 'putin', RT Search Term: 'clinton maidan'",
     x = "Date",
-    y = "Frequency",
+    y = "Frequency"
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
-    caption = "Stemmed."
+    # caption = "Stemmed."
   ) +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggsave("plot1.png", width = 10)
+  ggsave("clinton-maidan/putin.png", width = 10)
 ```
 
 ```{r}
