@@ -167,6 +167,9 @@ u_soros <- unique(all_soros$URL)
 # clinton maidan: 38
 # clinton soros: 119
 
+# Too small:
+# clinton soros mcfaul: 0
+
 # Order of search terms doesn't matter.
 ```
 
