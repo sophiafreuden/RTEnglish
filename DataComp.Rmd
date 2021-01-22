@@ -153,6 +153,22 @@ u_soros <- unique(all_soros$URL)
 # u_soros: 429; clinton: 116; mcfaul: 200; orange revolution: 162. The sums of these != u as there is some overlap between them (but not within them).
 ```
 
+```{r}
+# Search terms that are too big to have found results for:
+# clinton protests: 300+
+# clinton elections: 300+
+# clinton democratic party: 300+
+# clinton russia: 300+
+# clinton putin: 300+
+# clinton ukraine: 300+
+
+# Could do:
+# clinton orange revolution: 14
+# clinton maidan: 38
+# clinton soros: 119
+
+# Order of search terms doesn't matter.
+```
 
 
 
