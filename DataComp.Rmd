@@ -1,0 +1,137 @@
+---
+title: "DataComp"
+author: "Sophia Freuden"
+date: "1/22/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+# The purpose of this rmd is to determine how many unique RT English stories I scraped.
+```
+
+```{r}
+library(lubridate)
+library(tidyverse)
+```
+
+```{r}
+col_types = cols(
+  date = col_character(),
+  title = col_character(),
+  content = col_character(),
+  URL = col_character()
+)
+```
+
+```{r}
+data1 <- read_csv("clinton-civil-society/clinton-civil-society.csv", col_types = col_types)
+
+data1 <- data1 %>%
+  mutate(date = dmy(date))
+```
+
+```{r}
+data2 <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
+
+data2 <- data2 %>%
+  mutate(date = dmy(date))
+```
+
+```{r}
+data3 <- read_csv("orange-revolution/orange-revolution.csv", col_types = col_types)
+
+data3 <- data3 %>%
+  mutate(date = dmy(date))
+```
+
+```{r}
+data4 <- read_csv("soros-civil-society/soros-civil-society.csv", col_types = col_types)
+
+data4 <- data4 %>%
+  mutate(date = dmy(date))
+```
+
+```{r}
+data5 <- read_csv("soros-democratic-party/soros-democratic-party.csv", col_types = col_types)
+
+data5 <- data5 %>%
+  mutate(date = dmy(date))
+```
+
+```{r}
+data6 <- read_csv("soros-elections/soros-elections.csv", col_types = col_types)
+
+data6 <- data6 %>%
+  mutate(date = dmy(date))
+```
+
+```{r}
+data7 <- read_csv("soros-open-society/soros-open-society.csv", col_types = col_types)
+
+data7 <- data7 %>%
+  mutate(date = dmy(date))
+```
+
+```{r}
+data8 <- read_csv("soros-russia/soros-russia.csv", col_types = col_types)
+
+data8 <- data8 %>%
+  mutate(date = dmy(date))
+```
+
+```{r}
+data9 <- read_csv("stop-soros/stop-soros.csv", col_types = col_types)
+
+data9 <- data9 %>%
+  mutate(date = dmy(date))
+```
+
+```{r}
+data12 <- bind_rows(data1, data2)
+```
+
+```{r}
+data123 <- bind_rows(data12, data3)
+```
+
+```{r}
+data1234 <- bind_rows(data123, data4)
+```
+
+```{r}
+data12345 <- bind_rows(data1234, data5)
+```
+
+```{r}
+data123456 <- bind_rows(data12345, data6)
+```
+
+```{r}
+data1234567 <- bind_rows(data123456, data7)
+```
+
+```{r}
+data12345678 <- bind_rows(data1234567, data8)
+```
+
+```{r}
+all_data <- bind_rows(data12345678, data9)
+```
+
+```{r}
+u <- unique(all_data$URL)
+# u is a character vector length 880; raw all_data length 1344.
+```
+
+
+
+
+
+
+
+
+
+
+
+

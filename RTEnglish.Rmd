@@ -31,10 +31,8 @@ col_types = cols(
   URL = col_character()
 )
 
-# col_types = col_types
-
 # Be sure to use correct data file for your chosen search term.
-data <- read_csv("soros-open-society.csv", col_types = col_types)
+data <- read_csv("soros-open-society/soros-open-society.csv", col_types = col_types)
 
 data <- data %>%
   mutate(date = dmy(date))
@@ -239,14 +237,6 @@ ggplot(sent3, aes(x = emotion, y = count, fill = emotion)) +
   scale_fill_brewer(palette="Paired") +
   ggsave("emo1.png", width = 10)
 ```
-
-
-
-
-
-
-
-
 
 
 
