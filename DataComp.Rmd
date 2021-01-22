@@ -95,6 +95,15 @@ data10 <- data10 %>%
 ```
  
 ```{r}
+data11 <- read_csv("clinton-orange-revolution/clinton-orange-revolution.csv", col_types = col_types)
+
+data11 <- data11 %>%
+  mutate(date = dmy(date))
+
+## NOTE IF YOU MAKE MORE PAST THIS: THERE IS ALREADY A data12
+```
+
+```{r}
 data12 <- bind_rows(data1, data2)
 ```
 
@@ -127,12 +136,16 @@ data123456789 <- bind_rows(data12345678, data9)
 ```
 
 ```{r}
-all_data <- bind_rows(data123456789, data10)
+data12345678910 <- bind_rows(data123456789, data10)
+```
+
+```{r}
+all_data <- bind_rows(data12345678910, data11)
 ```
 
 ```{r}
 u <- unique(all_data$URL)
-# u is a character vector length 909; raw all_data length 1382.
+# u is a character vector length 912; raw all_data length 1396.
 ```
 
 ```{r}
@@ -161,16 +174,20 @@ u_soros <- unique(all_soros$URL)
 ```
 
 ```{r}
-all_clinton <- bind_rows(data1, data10)
+clinton110 <- bind_rows(data1, data10)
+```
+
+```{r}
+all_clinton <- bind_rows(clinton110, data11)
 ```
 
 ```{r}
 u_clinton <- unique(all_clinton$URL)
-# u_clinton is a character vector length 151; raw all_clinton length 154.
+# u_clinton is a character vector length 163; raw all_clinton length 168.
 ```
 
 ```{r}
-# u_soros: 429; u_clinton: 151; mcfaul: 200; orange revolution: 162. The sums of these != u as there is some overlap between them (but not within them).
+# u_soros: 429; u_clinton: 163; mcfaul: 200; orange revolution: 162. The sums of these != u as there is some overlap between them (but not within them).
 ```
 
 ```{r}
