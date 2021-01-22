@@ -88,6 +88,13 @@ data9 <- data9 %>%
 ```
 
 ```{r}
+data10 <- read_csv("clinton-maidan/clinton-maidan.csv", col_types = col_types)
+
+data10 <- data10 %>%
+  mutate(date = dmy(date))
+```
+ 
+```{r}
 data12 <- bind_rows(data1, data2)
 ```
 
@@ -116,12 +123,16 @@ data12345678 <- bind_rows(data1234567, data8)
 ```
 
 ```{r}
-all_data <- bind_rows(data12345678, data9)
+data123456789 <- bind_rows(data12345678, data9)
+```
+
+```{r}
+all_data <- bind_rows(data123456789, data10)
 ```
 
 ```{r}
 u <- unique(all_data$URL)
-# u is a character vector length 880; raw all_data length 1344.
+# u is a character vector length 909; raw all_data length 1382.
 ```
 
 ```{r}
@@ -150,7 +161,16 @@ u_soros <- unique(all_soros$URL)
 ```
 
 ```{r}
-# u_soros: 429; clinton: 116; mcfaul: 200; orange revolution: 162. The sums of these != u as there is some overlap between them (but not within them).
+all_clinton <- bind_rows(data1, data10)
+```
+
+```{r}
+u_clinton <- unique(all_clinton$URL)
+# u_clinton is a character vector length 151; raw all_clinton length 154.
+```
+
+```{r}
+# u_soros: 429; u_clinton: 151; mcfaul: 200; orange revolution: 162. The sums of these != u as there is some overlap between them (but not within them).
 ```
 
 ```{r}
@@ -164,7 +184,6 @@ u_soros <- unique(all_soros$URL)
 
 # Could do:
 # clinton orange revolution: 14
-# clinton maidan: 38
 # clinton soros: 119
 
 # Too small:
