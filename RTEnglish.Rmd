@@ -109,13 +109,13 @@ sums2d$ArtDate <- data$date
 sums2 %>%
   # The group_by and summarise below sum the articles by date. Alt version c'd out below.
   group_by(ArtDate) %>% 
-  summarise(Frequency = sum(putin)) %>%
+  summarise(Frequency = sum(republicanparty)) %>%
   ggplot(aes(x = ArtDate, y = Frequency)) +
   geom_point() +
   geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'putin', RT Search Term: 'clinton maidan'",
+    subtitle = "Term: 'republicanparty', RT Search Term: 'clinton maidan'",
     x = "Date",
     y = "Frequency"
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
@@ -123,7 +123,7 @@ sums2 %>%
   ) +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggsave("clinton-maidan/putin.png", width = 10)
+  ggsave("clinton-maidan/republicanparty.png", width = 10)
 ```
 
 ```{r}
@@ -197,7 +197,7 @@ sum2 %>%
   gt() %>%
   tab_header(
     title = "Sentiment Polarization Summary",
-    subtitle = "RT Search Term: 'soros open society'"
+    subtitle = "RT Search Term: 'clinton maidan'"
     )  %>% 
   # #tab_source_note(
   #   source_note = "RT Search Term was entered with quotation marks for accuracy."
@@ -210,7 +210,7 @@ sum2 %>%
     V5 = "3rd Qu.",
     V6 = "Max."
     ) %>% 
-  gtsave("table1.png", zoom = 2.5, expand = 10)
+  gtsave("clinton-maidan/table1.png", zoom = 2.5, expand = 10)
 ```
 
 ```{r}
@@ -231,11 +231,11 @@ ggplot(sent3, aes(x = emotion, y = count, fill = emotion)) +
   labs(title = "Emotion Analysis",
        x = "Emotion",
        y = "Total Count",
-       subtitle = "RT Search Term: 'soros open society'"
+       subtitle = "RT Search Term: 'clinton maidan'"
        # caption = "RT Search Term was entered with quotation marks for accuracy."
        ) +
   scale_fill_brewer(palette="Paired") +
-  ggsave("emo1.png", width = 10)
+  ggsave("clinton-maidan/emo1.png", width = 10)
 ```
 
 
