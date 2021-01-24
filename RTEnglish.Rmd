@@ -32,7 +32,7 @@ col_types = cols(
 )
 
 # Be sure to use correct data file for your chosen search term.
-data <- read_csv("soros-civil-society/soros-civil-society.csv", col_types = col_types)
+data <- read_csv("soros-elections/soros-elections.csv", col_types = col_types)
 
 data <- data %>%
   mutate(date = dmy(date))
@@ -115,7 +115,7 @@ sums2d %>%
   geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'money', RT Search Term: 'soros civil society'",
+    subtitle = "Term: 'money,' RT Search Term: 'soros elections'",
     x = "Date",
     y = "Frequency",
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
@@ -123,7 +123,7 @@ sums2d %>%
   ) +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggsave("soros-civil-society/money.png", width = 10)
+  ggsave("soros-elections/money.png", width = 10)
 ```
 
 ```{r}
@@ -146,7 +146,7 @@ sums2d %>%
 ```
 
 ```{r}
-wordcloud(words = head$term, freq = head$count, min.freq = 1000,
+wordcloud(words = head$term, freq = head$count, min.freq = 150,
   max.words=100, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
 
