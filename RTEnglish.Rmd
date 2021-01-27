@@ -33,8 +33,8 @@ col_types = cols(
 
 # Be sure to use correct data file for your chosen search term. Leave others commented out.
 
-# data <- read_csv("clinton-civil-society/clinton-civil-society.csv", col_types = col_types)
-data <- read_csv("clinton-maidan/clinton-maidan.csv", col_types = col_types)
+data <- read_csv("clinton-civil-society/clinton-civil-society.csv", col_types = col_types)
+# data <- read_csv("clinton-maidan/clinton-maidan.csv", col_types = col_types)
 # data <- read_csv("clinton-orange-revolution/clinton-orange-revolution.csv",
 #                  col_types = col_types)
 # data <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
@@ -127,7 +127,7 @@ sums2 %>%
   geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'america', RT Search Term: 'clinton maidan'",
+    subtitle = "Term: 'america', RT Search Term: 'clinton civil society'",
     x = "Date",
     y = "Frequency"
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
@@ -135,7 +135,7 @@ sums2 %>%
   ) +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggsave("clinton-maidan/america.png", width = 10)
+  ggsave("clinton-civil-society/america.png", width = 10)
 ```
 
 ```{r}
