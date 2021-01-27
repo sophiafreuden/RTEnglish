@@ -40,9 +40,9 @@ col_types = cols(
 # data <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
 # data <- read_csv("orange-revolution/orange-revolution.csv", col_types = col_types)
 # data <- read_csv("soros-civil-society/soros-civil-society.csv", col_types = col_types)
-data <- read_csv("soros-democratic-party/soros-democratic-party.csv", col_types = col_types)
+# data <- read_csv("soros-democratic-party/soros-democratic-party.csv", col_types = col_types)
 # data <- read_csv("soros-elections/soros-elections.csv", col_types = col_types)
-# data <- read_csv("soros-open-society/soros-open-society.csv", col_types = col_types)
+data <- read_csv("soros-open-society/soros-open-society.csv", col_types = col_types)
 # data <- read_csv("soros-russia/soros-russia.csv", col_types = col_types)
 # data <- read_csv("stop-soros/stop-soros.csv", col_types = col_types)
 
@@ -127,7 +127,7 @@ sums2 %>%
   geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'maidan', RT Search Term: 'soros democratic party'",
+    subtitle = "Term: 'maidan', RT Search Term: 'soros open society'",
     x = "Date",
     y = "Frequency"
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
@@ -135,7 +135,7 @@ sums2 %>%
   ) +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggsave("soros-democratic-party/maidan.png", width = 10)
+  ggsave("soros-open-society/maidan.png", width = 10)
 ```
 
 ```{r}
