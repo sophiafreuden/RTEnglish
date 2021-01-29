@@ -200,8 +200,7 @@ u_clinton <- unique(all_clinton$URL)
 # clinton ukraine: 300+
 
 # Could do:
-# clinton orange revolution: 14
-# clinton soros: 119
+# clinton soros: 119 (Won't do because of issues with bias and redundancy.)
 
 # Too small:
 # clinton soros mcfaul: 0
