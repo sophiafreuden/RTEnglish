@@ -29,11 +29,11 @@ col_types = cols(
 
 # Select which csv you want read in here. Comment out others as needed.
 
-data <- read_csv("clinton-civil-society/clinton-civil-society.csv", col_types = col_types)
+# data <- read_csv("clinton-civil-society/clinton-civil-society.csv", col_types = col_types)
 # data <- read_csv("clinton-maidan/clinton-maidan.csv", col_types = col_types)
 # data <- read_csv("clinton-orange-revolution/clinton-orange-revolution.csv",
 #                  col_types = col_types)
-# data <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
+data <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
 # data <- read_csv("orange-revolution/orange-revolution.csv", col_types = col_types)
 # data <- read_csv("soros-civil-society/soros-civil-society.csv", col_types = col_types)
 # data <- read_csv("soros-democratic-party/soros-democratic-party.csv", col_types = col_types)
@@ -74,11 +74,20 @@ sums2d$ArtDate <- data$date
 ```
 
 ```{r extractor}
-# This code chunk will select a date and term from the non-stemmed DTM that you can view
-# and find the URL for.
-temp <- sums2 %>% select(c(ArtDate, russia))
+# This code chunk will select a date and term from the non-stemmed DTM that you can view and find the URL for.
+temp <- sums2 %>% select(c(ArtDate, mcfaul))
+# temp2 <- sums2d %>% select(c(ArtDate, browder))
 view(temp)
-print(data$URL[12])
+print(data$URL[164])
+print(data$URL[34])
+print(data$URL[188])
+print(data$URL[55])
+print(data$URL[128])
+print(data$URL[93])
+print(data$URL[193])
+print(data$URL[54])
+print(data$URL[60])
+print(data$URL[178])
 ```
 
 ```{r}

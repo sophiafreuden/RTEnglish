@@ -201,6 +201,7 @@ u_clinton <- unique(all_clinton$URL)
 
 # Could do:
 # clinton soros: 119 (Won't do because of issues with bias and redundancy.)
+# clinton duma: 90
 
 # Too small:
 # clinton soros mcfaul: 0
