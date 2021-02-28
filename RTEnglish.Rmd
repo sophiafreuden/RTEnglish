@@ -150,13 +150,13 @@ sums2d$ArtDate <- data$date
 sums2d %>%
   # The group_by and summarise below sum the articles by date. Alt version c'd out below.
   group_by(ArtDate) %>% 
-  summarise(Frequency = sum(influenc)) %>%
+  summarise(Frequency = sum(western)) %>%
   ggplot(aes(x = ArtDate, y = Frequency)) +
   geom_point() +
   # geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'influenc', RT Search Term: N/A, 'Soros' Terms",
+    subtitle = "Term: 'western', RT Search Term: N/A, 'Soros' Terms",
     x = "Date",
     y = "Frequency",
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
@@ -164,7 +164,7 @@ sums2d %>%
   ) +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggsave("all-soros/influenc.png", width = 10)
+  ggsave("all-soros/western.png", width = 10)
 ```
 
 ```{r}
