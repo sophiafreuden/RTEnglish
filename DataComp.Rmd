@@ -182,6 +182,9 @@ all_clinton <- bind_rows(clinton110, data11)
 ```
 
 ```{r}
+
+# FIX THIS TO INCLUDE CLINTON ORANGE REVOLUTION
+
 u_clinton <- unique(all_clinton$URL)
 # u_clinton is a character vector length 163; raw all_clinton length 168.
 ```

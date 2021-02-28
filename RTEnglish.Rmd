@@ -30,22 +30,52 @@ col_types = cols(
   content = col_character(),
   URL = col_character()
 )
+```
 
-# Be sure to use correct data file for your chosen search term. Leave others commented out.
+```{r}
+# Be sure to use correct data files for your chosen individual. Leave others commented out.
 
-# data <- read_csv("clinton-civil-society/clinton-civil-society.csv", col_types = col_types)
-# data <- read_csv("clinton-maidan/clinton-maidan.csv", col_types = col_types)
-# data <- read_csv("clinton-orange-revolution/clinton-orange-revolution.csv",
+# clinton:
+# data1 <- read_csv("clinton-civil-society/clinton-civil-society.csv", col_types = col_types)
+# data2 <- read_csv("clinton-maidan/clinton-maidan.csv", col_types = col_types)
+# data3 <- read_csv("clinton-orange-revolution/clinton-orange-revolution.csv",
 #                  col_types = col_types)
-data <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
-# data <- read_csv("orange-revolution/orange-revolution.csv", col_types = col_types)
-# data <- read_csv("soros-civil-society/soros-civil-society.csv", col_types = col_types)
-# data <- read_csv("soros-democratic-party/soros-democratic-party.csv", col_types = col_types)
-# data <- read_csv("soros-elections/soros-elections.csv", col_types = col_types)
-# data <- read_csv("soros-open-society/soros-open-society.csv", col_types = col_types)
-# data <- read_csv("soros-russia/soros-russia.csv", col_types = col_types)
-# data <- read_csv("stop-soros/stop-soros.csv", col_types = col_types)
 
+# mcfaul:
+# data4 <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
+
+# Skipping over Orange Revolution in Final Version
+# dataX <- read_csv("orange-revolution/orange-revolution.csv", col_types = col_types)
+
+# soros:
+data5 <- read_csv("soros-civil-society/soros-civil-society.csv", col_types = col_types)
+data6 <- read_csv("soros-democratic-party/soros-democratic-party.csv", col_types = col_types)
+data7 <- read_csv("soros-elections/soros-elections.csv", col_types = col_types)
+data8 <- read_csv("soros-eu/soros-eu.csv", col_types = col_types)
+data9 <- read_csv("soros-globalism/soros-globalism.csv", col_types = col_types)
+data10 <- read_csv("soros-nato/soros-nato.csv", col_types = col_types)
+data11<- read_csv("soros-open-society/soros-open-society.csv", col_types = col_types)
+data12 <- read_csv("soros-russia/soros-russia.csv", col_types = col_types)
+data13 <- read_csv("stop-soros/stop-soros.csv", col_types = col_types)
+```
+
+```{r}
+# soros
+
+data45 <- bind_rows(data4, data5)
+data456 <- bind_rows(data45, data6)
+data4567 <- bind_rows(data456, data7)
+data45678 <- bind_rows(data4567, data8)
+data456789 <- bind_rows(data45678, data9)
+data45678910 <- bind_rows(data456789, data10)
+data4567891011 <- bind_rows(data45678910, data11)
+data456789101112 <- bind_rows(data4567891011, data12)
+all_soros <- bind_rows(data456789101112, data13)
+
+data <- all_soros
+```
+
+```{r}
 data <- data %>%
   mutate(date = dmy(date))
 
@@ -125,7 +155,7 @@ sums2d %>%
   geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'investig', RT Search Term: 'mcfaul'",
+    subtitle = "Term: 'investig', RT Search Term: N/A, 'Soros' Terms",
     x = "Date",
     y = "Frequency",
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
@@ -133,7 +163,7 @@ sums2d %>%
   ) +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggsave("mcfaul/investig.png", width = 10)
+  ggsave("all-soros/investig.png", width = 10)
 ```
 
 ```{r}
@@ -207,7 +237,7 @@ sum2 %>%
   gt() %>%
   tab_header(
     title = "Sentiment Polarization Summary",
-    subtitle = "RT Search Term: 'clinton maidan'"
+    subtitle = "RT Search Term: N/A, 'Soros' Terms"
     )  %>% 
   # #tab_source_note(
   #   source_note = "RT Search Term was entered with quotation marks for accuracy."
@@ -220,7 +250,7 @@ sum2 %>%
     V5 = "3rd Qu.",
     V6 = "Max."
     ) %>% 
-  gtsave("clinton-maidan/table1.png", zoom = 2.5, expand = 10)
+  gtsave("all-soros/table1.png", zoom = 2.5, expand = 10)
 ```
 
 ```{r}
@@ -241,11 +271,11 @@ ggplot(sent3, aes(x = emotion, y = count, fill = emotion)) +
   labs(title = "Emotion Analysis",
        x = "Emotion",
        y = "Total Count",
-       subtitle = "RT Search Term: 'clinton maidan'"
+       subtitle = "RT Search Term: N/A, 'Soros' Terms"
        # caption = "RT Search Term was entered with quotation marks for accuracy."
        ) +
   scale_fill_brewer(palette="Paired") +
-  ggsave("clinton-maidan/emo1.png", width = 10)
+  ggsave("all-soros/emo1.png", width = 10)
 ```
 
 
