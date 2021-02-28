@@ -141,30 +141,42 @@ sums2d$ArtDate <- data$date
 ```
 
 ```{r}
+# Use this to find outliers and filter them out. You can replot them by replacing
+# sums2/sums2d in the code chunk below and changing the caption to "Outliers
+# removed."
+
+# I keep this commented out when I'm not actively using it.
+
+# temp <- sums2 %>% select(c(ArtDate, ngos))
+# temp2 <- temp %>% filter(ngos <= 18)
+# view(temp)
+```
+
+```{r}
 # Summed per date. Change between sums2 and sums2d (stemmed) as needed.
 
 # CHANGE BELOW:
 # term in sum() below and
 # 'Term' and 'RT Seach Term' to whatever term/search term your data is based on.
 
-sums2d %>%
+sums2 %>%
   # The group_by and summarise below sum the articles by date. Alt version c'd out below.
   group_by(ArtDate) %>% 
-  summarise(Frequency = sum(western)) %>%
+  summarise(Frequency = sum(ngos)) %>%
   ggplot(aes(x = ArtDate, y = Frequency)) +
   geom_point() +
   # geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'western', RT Search Term: N/A, 'Soros' Terms",
+    subtitle = "Term: 'ngos', RT Search Term: N/A, 'Soros' Terms",
     x = "Date",
-    y = "Frequency",
+    y = "Frequency"
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
-    caption = "Stemmed."
+    # caption = "Stemmed"
   ) +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggsave("all-soros/western.png", width = 10)
+  ggsave("all-soros/ngos2.png", width = 10)
 ```
 
 ```{r}
