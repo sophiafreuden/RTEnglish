@@ -63,15 +63,31 @@ data13 <- read_csv("stop-soros/stop-soros.csv", col_types = col_types)
 # soros
 
 data56 <- bind_rows(data5, data6)
+# data56 <- unique(data56)
+
 data567 <- bind_rows(data56, data7)
+# data567 <- unique(data567)
+
 data5678 <- bind_rows(data567, data8)
+# data5678 <- unique(data5678)
+
 data56789 <- bind_rows(data5678, data9)
+# data56789 <- unique(data56789)
+
 data5678910 <- bind_rows(data56789, data10)
+# data5678910 <- unique(data5678910)
+
 data567891011 <- bind_rows(data5678910, data11)
+# data567891011 <- unique(data567891011)
+
 data56789101112 <- bind_rows(data567891011, data12)
+# data56789101112 <- unique(data56789101112)
+
 all_soros <- bind_rows(data56789101112, data13)
 
 data <- unique(all_soros)
+
+# While this last command gets rid of some redundancies in the data, it doesn't get all of them in the soros and clinton sets due to some discrepancies in the title and content columns that occur from the web scrape and such. I've copied instructions on how to filter out these redundancies a few code code chunks down.
 ```
 
 ```{r}
@@ -126,7 +142,7 @@ nDTM <- DocumentTermMatrix(nonstem.corpus)
 
 ```{r}
 sums <- as.data.frame(colSums(as.matrix(nDTM)))
-sums <- rownames_to_column(sums) 
+sums <- rownames_to_column(sums)
 colnames(sums) <- c("term", "count")
 sums <- arrange(sums, desc(count))
 head <- sums[1:75,]
@@ -138,52 +154,62 @@ sums2d <- as.data.frame(as.matrix(DTM))
 ```{r}
 sums2$ArtDate <- data$date
 sums2d$ArtDate <- data$date
+
+# To get rid of the redundancies, I add the URL here and then use the unique function to parse out redundant stories. While the URL itself isn't necessary for anything, it does serve as a helpful unique ID code that I can use to filter out redundant stories.
+
+sums2$URL <- data$URL
+sums2 <- unique(sums2)
+
+sums2d$URL <- data$URL
+sums2d <- unique(sums2d)
 ```
 
 ```{r}
-# Use this to find outliers and filter them out. You can replot them by replacing
-# sums2/sums2d in the code chunk below and changing the caption to "Outliers
-# removed."
+# redundancy eliminator
 
-# I keep this commented out when I'm not actively using it.
+# non-stemmed
+# choice2 <- sums2 %>% select(c(ArtDate, trump, URL))
+# choice2 <- unique(choice2)
+#view(choice2)
 
-# temp <- sums2 %>% select(c(ArtDate, ngos))
-# temp2 <- temp %>% filter(ngos <= 18)
-# view(temp)
+# stemmed
+choice2d <- sums2d %>% select(c(ArtDate, western, URL))
+choice2d <- unique(choice2d)
+# view(choice2d)
 ```
 
 ```{r}
-# Summed per date. Change between sums2 and sums2d (stemmed) as needed.
+# Summed per date. Change between choice2 and choice2d (stemmed) as needed.
 
 # CHANGE BELOW:
 # term in sum() below and
 # 'Term' and 'RT Seach Term' to whatever term/search term your data is based on.
 
-sums2 %>%
+choice2d %>%
   # The group_by and summarise below sum the articles by date. Alt version c'd out below.
   group_by(ArtDate) %>% 
-  summarise(Frequency = sum(ngos)) %>%
+  summarise(Frequency = sum(western)) %>%
   ggplot(aes(x = ArtDate, y = Frequency)) +
   geom_point() +
   # geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'ngos', RT Search Term: N/A, 'Soros' Terms",
+    subtitle = "Term: 'western', RT Search Term: N/A, 'Soros' Terms",
     x = "Date",
-    y = "Frequency"
+    y = "Frequency",
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
-    # caption = "Stemmed"
+    caption = "Stemmed."
   ) +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggsave("all-soros/ngos2.png", width = 10)
+  ggsave("all-soros/western.png", width = 10)
 ```
 
 ```{r}
 # Non-summed per date.
-# Folloew "Change Below" instructions above, but sum() term is y below.
+# Follow "Change Below" instructions above, but sum() term is y below.
 
-# sums2 %>%
+# unique %>%
 #   ggplot(aes(x = ArtDate, y = soros)) +
 #   geom_point() +
 #   geom_smooth(method = 'loess') +
@@ -199,7 +225,7 @@ sums2 %>%
 ```
 
 ```{r}
-wordcloud(words = head$term, freq = head$count, min.freq = 1000,
+wordcloud(words = head$term, freq = head$count, min.freq = 750,
   max.words=100, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
 
