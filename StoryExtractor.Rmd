@@ -97,25 +97,29 @@ sums2d <- as.data.frame(as.matrix(DTM))
 
 sums2$ArtDate <- data$date
 sums2d$ArtDate <- data$date
+
+# sums2$URL <- data$URL
+# sums2d$URL <- data$URL
 ```
 
 ```{r extractor}
 # This code chunk will select a date and term from the non-stemmed DTM that you can view and find the URL for.
 temp <- sums2 %>% select(c(ArtDate, soros))
+temp <- unique(temp)
 # temp2 <- sums2d %>% select(c(ArtDate, browder))
 view(temp)
 print(data$URL[522])
 print(data$URL[842])
-print(data$URL[708])
-print(data$URL[708])
-print(data$URL[708])
-print(data$URL[708])
-print(data$URL[708])
-print(data$URL[708])
-print(data$URL[708])
-print(data$URL[708])
+print(data$URL[113])
+print(data$URL[12])
+print(data$URL[72])
+print(data$URL[661])
+print(data$URL[39])
+print(data$URL[466])
+print(data$URL[658])
+print(data$URL[18])
 
-temp2 <- unique(temp)
+# soros: 213 sum: 1938
 ```
 
 ```{r}
