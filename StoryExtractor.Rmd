@@ -98,37 +98,35 @@ sums2d <- as.data.frame(as.matrix(DTM))
 sums2$ArtDate <- data$date
 sums2d$ArtDate <- data$date
 
-# sums2$URL <- data$URL
-# sums2d$URL <- data$URL
+sums2$URL <- data$URL
+sums2d$URL <- data$URL
 ```
 
 ```{r extractor}
 # This code chunk will select a date and term from the non-stemmed DTM that you can view and find the URL for.
-temp <- sums2 %>% select(c(ArtDate, soros))
-temp <- unique(temp)
-# temp2 <- sums2d %>% select(c(ArtDate, browder))
-view(temp)
-print(data$URL[522]) # 28
-print(data$URL[842]) # 25
-print(data$URL[113]) # 23
-print(data$URL[12]) # 22
-print(data$URL[72]) # 22
-print(data$URL[661]) # 21
-print(data$URL[39]) # 19
-print(data$URL[35]) # 18
-print(data$URL[466]) # 18
-print(data$URL[658]) # 18
+# temp <- sums2 %>% select(c(ArtDate, soros, URL))
+# temp <- unique(temp)
+temp2 <- sums2d %>% select(c(ArtDate, influenc, URL))
+temp2 <- unique(temp2)
+view(temp2)
 
-print(data$date[522]) # 28
-print(data$date[842]) # 25
-print(data$date[113]) # 23
-print(data$date[12]) # 22
-print(data$date[72]) # 22
-print(data$date[661]) # 21
-print(data$date[39]) # 19
-print(data$date[35]) # 18
-print(data$date[466]) # 18
-print(data$date[658]) # 18
+print(temp2$URL[455])
+print(temp2$URL[22])
+
+temp3 <- temp %>% arrange(desc(soros))
+temp3 <- head(temp3, 12) # select enough so that the top 10 unique terms are in it
+temp3 <- temp3[-c(3, 9), ] # filter out the duplicate rows with the lesser quantity
+
+print(temp3$URL[1])
+print(temp3$URL[2])
+print(temp3$URL[3])
+print(temp3$URL[4])
+print(temp3$URL[5])
+print(temp3$URL[6])
+print(temp3$URL[7])
+print(temp3$URL[8])
+print(temp3$URL[9])
+print(temp3$URL[10])
 
 # soros: 214 sum: 1938
 ```
