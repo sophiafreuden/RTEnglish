@@ -36,10 +36,12 @@ col_types = cols(
 # Be sure to use correct data files for your chosen individual. Leave others commented out.
 
 # clinton:
-# data1 <- read_csv("clinton-civil-society/clinton-civil-society.csv", col_types = col_types)
-# data2 <- read_csv("clinton-maidan/clinton-maidan.csv", col_types = col_types)
-# data3 <- read_csv("clinton-orange-revolution/clinton-orange-revolution.csv",
-#                  col_types = col_types)
+data1 <- read_csv("clinton-civil-society/clinton-civil-society.csv", col_types = col_types)
+data2 <- read_csv("clinton-maidan/clinton-maidan.csv", col_types = col_types)
+data3 <- read_csv("clinton-orange-revolution/clinton-orange-revolution.csv",
+                 col_types = col_types)
+data4 <- read_csv("clinton-duma/clinton-duma.csv",
+                 col_types = col_types)
 
 # mcfaul:
 # data4 <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
@@ -48,44 +50,56 @@ col_types = cols(
 # dataX <- read_csv("orange-revolution/orange-revolution.csv", col_types = col_types)
 
 # soros:
-data5 <- read_csv("soros-civil-society/soros-civil-society.csv", col_types = col_types)
-data6 <- read_csv("soros-democratic-party/soros-democratic-party.csv", col_types = col_types)
-data7 <- read_csv("soros-elections/soros-elections.csv", col_types = col_types)
-data8 <- read_csv("soros-eu/soros-eu.csv", col_types = col_types)
-data9 <- read_csv("soros-globalism/soros-globalism.csv", col_types = col_types)
-data10 <- read_csv("soros-nato/soros-nato.csv", col_types = col_types)
-data11<- read_csv("soros-open-society/soros-open-society.csv", col_types = col_types)
-data12 <- read_csv("soros-russia/soros-russia.csv", col_types = col_types)
-data13 <- read_csv("stop-soros/stop-soros.csv", col_types = col_types)
+# data5 <- read_csv("soros-civil-society/soros-civil-society.csv", col_types = col_types)
+# data6 <- read_csv("soros-democratic-party/soros-democratic-party.csv", col_types = col_types)
+# data7 <- read_csv("soros-elections/soros-elections.csv", col_types = col_types)
+# data8 <- read_csv("soros-eu/soros-eu.csv", col_types = col_types)
+# data9 <- read_csv("soros-globalism/soros-globalism.csv", col_types = col_types)
+# data10 <- read_csv("soros-nato/soros-nato.csv", col_types = col_types)
+# data11<- read_csv("soros-open-society/soros-open-society.csv", col_types = col_types)
+# data12 <- read_csv("soros-russia/soros-russia.csv", col_types = col_types)
+# data13 <- read_csv("stop-soros/stop-soros.csv", col_types = col_types)
+```
+
+```{r}
+# clinton
+
+data12 <- bind_rows(data1, data2)
+
+data123 <- bind_rows(data12, data3)
+
+all_clinton <- bind_rows(data123, data4)
+
+data <- unique(all_clinton)
 ```
 
 ```{r}
 # soros
 
-data56 <- bind_rows(data5, data6)
-# data56 <- unique(data56)
-
-data567 <- bind_rows(data56, data7)
-# data567 <- unique(data567)
-
-data5678 <- bind_rows(data567, data8)
-# data5678 <- unique(data5678)
-
-data56789 <- bind_rows(data5678, data9)
-# data56789 <- unique(data56789)
-
-data5678910 <- bind_rows(data56789, data10)
-# data5678910 <- unique(data5678910)
-
-data567891011 <- bind_rows(data5678910, data11)
-# data567891011 <- unique(data567891011)
-
-data56789101112 <- bind_rows(data567891011, data12)
-# data56789101112 <- unique(data56789101112)
-
-all_soros <- bind_rows(data56789101112, data13)
-
-data <- unique(all_soros)
+# data56 <- bind_rows(data5, data6)
+# # data56 <- unique(data56)
+# 
+# data567 <- bind_rows(data56, data7)
+# # data567 <- unique(data567)
+# 
+# data5678 <- bind_rows(data567, data8)
+# # data5678 <- unique(data5678)
+# 
+# data56789 <- bind_rows(data5678, data9)
+# # data56789 <- unique(data56789)
+# 
+# data5678910 <- bind_rows(data56789, data10)
+# # data5678910 <- unique(data5678910)
+# 
+# data567891011 <- bind_rows(data5678910, data11)
+# # data567891011 <- unique(data567891011)
+# 
+# data56789101112 <- bind_rows(data567891011, data12)
+# # data56789101112 <- unique(data56789101112)
+# 
+# all_soros <- bind_rows(data56789101112, data13)
+# 
+# data <- unique(all_soros)
 
 # While this last command gets rid of some redundancies in the data, it doesn't get all of them in the soros and clinton sets due to some discrepancies in the title and content columns that occur from the web scrape and such. I've copied instructions on how to filter out these redundancies a few code code chunks down.
 ```
@@ -168,13 +182,13 @@ sums2d <- unique(sums2d)
 # redundancy eliminator
 
 # non-stemmed
-choice2 <- sums2 %>% select(c(ArtDate, trump, URL))
-choice2 <- unique(choice2)
+# choice2 <- sums2 %>% select(c(ArtDate, democratic, URL))
+# choice2 <- unique(choice2)
 #view(choice2)
 
 # stemmed
-# choice2d <- sums2d %>% select(c(ArtDate, soros, URL))
-# choice2d <- unique(choice2d)
+choice2d <- sums2d %>% select(c(ArtDate, war, URL))
+choice2d <- unique(choice2d)
 # view(choice2d)
 ```
 
@@ -188,13 +202,13 @@ choice2 <- unique(choice2)
 choice2d %>%
   # The group_by and summarise below sum the articles by date. Alt version c'd out below.
   group_by(ArtDate) %>% 
-  summarise(Frequency = sum(western)) %>%
+  summarise(Frequency = sum(war)) %>%
   ggplot(aes(x = ArtDate, y = Frequency)) +
   geom_point() +
   # geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'western', RT Search Term: N/A, 'Soros' Terms",
+    subtitle = "Term: 'war', RT Search Term: N/A, 'Clinton' Terms",
     x = "Date",
     y = "Frequency",
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
@@ -202,7 +216,7 @@ choice2d %>%
   ) +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggsave("all-soros/western.png", width = 10)
+  ggsave("all-clinton/war.png", width = 10)
 ```
 
 ```{r}
@@ -225,7 +239,7 @@ choice2d %>%
 ```
 
 ```{r}
-wordcloud(words = head$term, freq = head$count, min.freq = 750,
+wordcloud(words = head$term, freq = head$count, min.freq = 250,
   max.words=100, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
 
@@ -276,7 +290,7 @@ sum2 %>%
   gt() %>%
   tab_header(
     title = "Sentiment Polarization Summary",
-    subtitle = "RT Search Term: N/A, 'Soros' Terms"
+    subtitle = "RT Search Term: N/A, 'Clinton' Terms"
     )  %>% 
   # #tab_source_note(
   #   source_note = "RT Search Term was entered with quotation marks for accuracy."
@@ -289,7 +303,7 @@ sum2 %>%
     V5 = "3rd Qu.",
     V6 = "Max."
     ) %>% 
-  gtsave("all-soros/table1.png", zoom = 2.5, expand = 10)
+  gtsave("all-clinton/table1.png", zoom = 2.5, expand = 10)
 ```
 
 ```{r}
@@ -310,11 +324,11 @@ ggplot(sent3, aes(x = emotion, y = count, fill = emotion)) +
   labs(title = "Emotion Analysis",
        x = "Emotion",
        y = "Total Count",
-       subtitle = "RT Search Term: N/A, 'Soros' Terms"
+       subtitle = "RT Search Term: N/A, 'Clinton' Terms"
        # caption = "RT Search Term was entered with quotation marks for accuracy."
        ) +
   scale_fill_brewer(palette="Paired") +
-  ggsave("all-soros/emo1.png", width = 10)
+  ggsave("all-clinton/emo1.png", width = 10)
 ```
 
 

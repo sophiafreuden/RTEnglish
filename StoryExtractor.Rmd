@@ -38,36 +38,42 @@ col_types = cols(
 #                  col_types = col_types)
 
 # mcfaul:
-# data4 <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
+data4 <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
 
 # Skipping over Orange Revolution in Final Version
 # dataX <- read_csv("orange-revolution/orange-revolution.csv", col_types = col_types)
 
 # soros:
-data5 <- read_csv("soros-civil-society/soros-civil-society.csv", col_types = col_types)
-data6 <- read_csv("soros-democratic-party/soros-democratic-party.csv", col_types = col_types)
-data7 <- read_csv("soros-elections/soros-elections.csv", col_types = col_types)
-data8 <- read_csv("soros-eu/soros-eu.csv", col_types = col_types)
-data9 <- read_csv("soros-globalism/soros-globalism.csv", col_types = col_types)
-data10 <- read_csv("soros-nato/soros-nato.csv", col_types = col_types)
-data11<- read_csv("soros-open-society/soros-open-society.csv", col_types = col_types)
-data12 <- read_csv("soros-russia/soros-russia.csv", col_types = col_types)
-data13 <- read_csv("stop-soros/stop-soros.csv", col_types = col_types)
+# data5 <- read_csv("soros-civil-society/soros-civil-society.csv", col_types = col_types)
+# data6 <- read_csv("soros-democratic-party/soros-democratic-party.csv", col_types = col_types)
+# data7 <- read_csv("soros-elections/soros-elections.csv", col_types = col_types)
+# data8 <- read_csv("soros-eu/soros-eu.csv", col_types = col_types)
+# data9 <- read_csv("soros-globalism/soros-globalism.csv", col_types = col_types)
+# data10 <- read_csv("soros-nato/soros-nato.csv", col_types = col_types)
+# data11<- read_csv("soros-open-society/soros-open-society.csv", col_types = col_types)
+# data12 <- read_csv("soros-russia/soros-russia.csv", col_types = col_types)
+# data13 <- read_csv("stop-soros/stop-soros.csv", col_types = col_types)
 ```
 
 ```{r}
 # soros
 
-data56 <- bind_rows(data5, data6)
-data567 <- bind_rows(data56, data7)
-data5678 <- bind_rows(data567, data8)
-data56789 <- bind_rows(data5678, data9)
-data5678910 <- bind_rows(data56789, data10)
-data567891011 <- bind_rows(data5678910, data11)
-data56789101112 <- bind_rows(data567891011, data12)
-all_soros <- bind_rows(data56789101112, data13)
+# data56 <- bind_rows(data5, data6)
+# data567 <- bind_rows(data56, data7)
+# data5678 <- bind_rows(data567, data8)
+# data56789 <- bind_rows(data5678, data9)
+# data5678910 <- bind_rows(data56789, data10)
+# data567891011 <- bind_rows(data5678910, data11)
+# data56789101112 <- bind_rows(data567891011, data12)
+# all_soros <- bind_rows(data56789101112, data13)
+# 
+# data <- unique(all_soros)
+```
 
-data <- unique(all_soros)
+```{r}
+# mcfaul
+
+data <- data4
 ```
 
 ```{r}
@@ -104,9 +110,9 @@ sums2d$URL <- data$URL
 
 ```{r extractor}
 # This code chunk will select a date and term from the non-stemmed DTM that you can view and find the URL for.
-# temp <- sums2 %>% select(c(ArtDate, soros, URL))
-# temp <- unique(temp)
-temp2 <- sums2d %>% select(c(ArtDate, influenc, URL))
+temp <- sums2 %>% select(c(ArtDate, mcfaul, URL))
+temp <- unique(temp)
+temp2 <- sums2d %>% select(c(ArtDate, ukrain, URL))
 temp2 <- unique(temp2)
 view(temp2)
 
@@ -127,6 +133,17 @@ print(temp3$URL[7])
 print(temp3$URL[8])
 print(temp3$URL[9])
 print(temp3$URL[10])
+
+print(temp3$soros[1])
+print(temp3$soros[2])
+print(temp3$soros[3])
+print(temp3$soros[4])
+print(temp3$soros[5])
+print(temp3$soros[6])
+print(temp3$soros[7])
+print(temp3$soros[8])
+print(temp3$soros[9])
+print(temp3$soros[10])
 
 # soros: 214 sum: 1938
 ```
