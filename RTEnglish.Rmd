@@ -182,13 +182,13 @@ sums2d <- unique(sums2d)
 # redundancy eliminator
 
 # non-stemmed
-# choice2 <- sums2 %>% select(c(ArtDate, democratic, URL))
-# choice2 <- unique(choice2)
+choice2 <- sums2 %>% select(c(ArtDate, navalny, URL))
+choice2 <- unique(choice2)
 #view(choice2)
 
 # stemmed
-choice2d <- sums2d %>% select(c(ArtDate, war, URL))
-choice2d <- unique(choice2d)
+# choice2d <- sums2d %>% select(c(ArtDate, western, URL))
+# choice2d <- unique(choice2d)
 # view(choice2d)
 ```
 
@@ -199,24 +199,24 @@ choice2d <- unique(choice2d)
 # term in sum() below and
 # 'Term' and 'RT Seach Term' to whatever term/search term your data is based on.
 
-choice2d %>%
+choice2 %>%
   # The group_by and summarise below sum the articles by date. Alt version c'd out below.
   group_by(ArtDate) %>% 
-  summarise(Frequency = sum(war)) %>%
+  summarise(Frequency = sum(navalny)) %>%
   ggplot(aes(x = ArtDate, y = Frequency)) +
   geom_point() +
   # geom_smooth(method = 'loess') +
   labs(
     title = "Term Frequency Per Article Over Time",
-    subtitle = "Term: 'war', RT Search Term: N/A, 'Clinton' Terms",
+    subtitle = "Term: 'navalny', RT Search Term: N/A, 'Clinton' Terms",
     x = "Date",
-    y = "Frequency",
+    y = "Frequency"
     # Comment/uncomment caption below as needed. Add/delete comma in line above, too.
-    caption = "Stemmed."
+    # caption = "Stemmed."
   ) +
   scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggsave("all-clinton/war.png", width = 10)
+  ggsave("all-clinton/navalny.png", width = 10)
 ```
 
 ```{r}
