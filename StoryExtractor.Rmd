@@ -32,13 +32,15 @@ col_types = cols(
 # Be sure to use correct data files for your chosen individual. Leave others commented out.
 
 # clinton:
-# data1 <- read_csv("clinton-civil-society/clinton-civil-society.csv", col_types = col_types)
-# data2 <- read_csv("clinton-maidan/clinton-maidan.csv", col_types = col_types)
-# data3 <- read_csv("clinton-orange-revolution/clinton-orange-revolution.csv",
-#                  col_types = col_types)
+data1 <- read_csv("clinton-civil-society/clinton-civil-society.csv", col_types = col_types)
+data2 <- read_csv("clinton-maidan/clinton-maidan.csv", col_types = col_types)
+data3 <- read_csv("clinton-orange-revolution/clinton-orange-revolution.csv",
+                 col_types = col_types)
+data4 <- read_csv("clinton-duma/clinton-duma.csv",
+                 col_types = col_types)
 
 # mcfaul:
-data4 <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
+# data4 <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
 
 # Skipping over Orange Revolution in Final Version
 # dataX <- read_csv("orange-revolution/orange-revolution.csv", col_types = col_types)
@@ -53,6 +55,18 @@ data4 <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
 # data11<- read_csv("soros-open-society/soros-open-society.csv", col_types = col_types)
 # data12 <- read_csv("soros-russia/soros-russia.csv", col_types = col_types)
 # data13 <- read_csv("stop-soros/stop-soros.csv", col_types = col_types)
+```
+
+```{r}
+# clinton
+
+data12 <- bind_rows(data1, data2)
+
+data123 <- bind_rows(data12, data3)
+
+all_clinton <- bind_rows(data123, data4)
+
+data <- unique(all_clinton)
 ```
 
 ```{r}
@@ -73,7 +87,7 @@ data4 <- read_csv("mcfaul/mcfaul.csv", col_types = col_types)
 ```{r}
 # mcfaul
 
-data <- data4
+# data <- data4
 ```
 
 ```{r}
@@ -110,42 +124,30 @@ sums2d$URL <- data$URL
 
 ```{r extractor}
 # This code chunk will select a date and term from the non-stemmed DTM that you can view and find the URL for.
-temp <- sums2 %>% select(c(ArtDate, mcfaul, URL))
+temp <- sums2 %>% select(c(ArtDate, clinton, URL))
 temp <- unique(temp)
-temp2 <- sums2d %>% select(c(ArtDate, ukrain, URL))
-temp2 <- unique(temp2)
-view(temp2)
+temp <- temp %>% mutate(year = year(ArtDate))
+temp <- temp %>% filter(year >= 2015)
+# temp2 <- sums2d %>% select(c(ArtDate, ukrain, URL))
+# temp2 <- unique(temp2)
+view(temp)
 
-print(temp2$URL[455])
-print(temp2$URL[22])
+head1 <- temp  %>% arrange(desc(clinton))
+head1 <- head(head1, 10)
+view(head1)
 
-temp3 <- temp %>% arrange(desc(soros))
-temp3 <- head(temp3, 12) # select enough so that the top 10 unique terms are in it
-temp3 <- temp3[-c(3, 9), ] # filter out the duplicate rows with the lesser quantity
+print(head1$URL[1])
+print(head1$URL[2])
+print(head1$URL[3])
+print(head1$URL[4])
+print(head1$URL[5])
+print(head1$URL[6])
+print(head1$URL[7])
+print(head1$URL[8])
+print(head1$URL[9])
+print(head1$URL[10])
 
-print(temp3$URL[1])
-print(temp3$URL[2])
-print(temp3$URL[3])
-print(temp3$URL[4])
-print(temp3$URL[5])
-print(temp3$URL[6])
-print(temp3$URL[7])
-print(temp3$URL[8])
-print(temp3$URL[9])
-print(temp3$URL[10])
-
-print(temp3$soros[1])
-print(temp3$soros[2])
-print(temp3$soros[3])
-print(temp3$soros[4])
-print(temp3$soros[5])
-print(temp3$soros[6])
-print(temp3$soros[7])
-print(temp3$soros[8])
-print(temp3$soros[9])
-print(temp3$soros[10])
-
-# soros: 214 sum: 1938
+# sample: 89 sum: 494, 0.1802 > .10
 ```
 
 ```{r}
